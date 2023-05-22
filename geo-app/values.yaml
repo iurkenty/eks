@@ -1,0 +1,16 @@
+---
+image:
+  repository: iurkenty/perimeter81
+  tag: "v7"
+  port: 5000
+  replicas: 2
+
+ingress:
+  lbGroup: geo-app
+  securityGroup: geo-app-alb
+  host: perimeter81.leo-kroshus.net
+  serviceName: geo-app
+  servicePort: 5000
+
+environment:
+  appEnv: dev
