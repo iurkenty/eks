@@ -9,8 +9,24 @@ spec:
   type: NodePort
   ports:
     - protocol: TCP
-      port: {{ .Values.image.port }}
-      targetPort: {{ .Values.image.port }}
+      name: {{ .Chart.Name }}
+      port: {{ .Values.geo_app.port }}
+      targetPort: {{ .Values.geo_app.port }}
   selector:
     app.kubernetes.io/name: {{ .Chart.Name }}
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-matrix
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: {{ .Values.matrix.name }}
+      port: {{ .Values.matrix.port }}
+      targetPort: {{ .Values.matrix.port }}
+  selector:
+    app.kubernetes.io/name: {{ .Chart.Name }}

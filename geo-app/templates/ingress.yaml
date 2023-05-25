@@ -20,6 +20,13 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.ingress.serviceName }}
+                name: {{ .Chart.Name }}
                 port:
-                  number: {{ .Values.ingress.servicePort }}
+                  number: {{ .Values.geo_app.port }}
+          - path: /matrix 
+            pathType: Prefix
+            backend:
+              service: 
+                name: {{ .Chart.Name }}-matrix
+                port:
+                  number: {{ .Values.matrix.port }}

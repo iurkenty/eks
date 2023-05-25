@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
 spec:
-  replicas: {{ .Values.image.replicas }}
+  replicas: {{ .Values.geo_app.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Chart.Name }}
@@ -16,8 +16,13 @@ spec:
         app.kubernetes.io/name: {{ .Chart.Name }}
     spec:
       containers:
+        - name: {{ .Chart.Name }}-matrix
+          image: {{ .Values.matrix.image }}
+          command: ["cmatrix"]  
+          ports:
+            - containerPort: {{ .Values.matrix.port }}
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          image: {{ .Values.geo_app.image }}:{{ .Values.geo_app.tag }}
           env:
             - name: TOKEN
               valueFrom:
@@ -28,4 +33,4 @@ spec:
               value: {{ .Values.env.USER_STRING }}  
           imagePullPolicy: "IfNotPresent"
           ports:
-            - containerPort: {{ .Values.image.port }}
+            - containerPort: {{ .Values.geo_app.port }}
