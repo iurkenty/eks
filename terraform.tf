@@ -4,10 +4,10 @@ terraform {
   cloud {
     organization = "iurkenty"
     workspaces {
-      name = "eks"
+      name = "sandbox"
     }
   }
-
+  
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -30,16 +30,15 @@ terraform {
 
 data "aws_caller_identity" "current" {} # used for accessing Account ID and ARN
 
+
 provider "aws" {
- #profile = "GeneralAdminus"
-  region  = "us-west-2"
+  region = "us-west-2"
 
   default_tags {
     tags = {
-      Name       = "Iurii"
-      Owner      = "Nati"
-      Department = "DevOps"
-      Temp       = "True"
+      Dev        = "Iurii"
+      Project    = "eks"
+      Zaibal     = "True"
     }
   }
-}
+} 

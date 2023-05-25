@@ -10,12 +10,6 @@ cluster_azs             = ["us-west-2a", "us-west-2b", "us-west-2c"]
 # EKS Cluster
 autoscaling_average_cpu = 30
 eks_managed_node_groups = {
-   default_node_group = {
-    attach_cluster_primary_security_group = true
-    use_custom_launch_template            = false
-    disk_size = 50
-  }
-/*
   "geo-app-eks-x86" = {
     ami_type     = "AL2_x86_64"
     min_size     = 1
@@ -44,5 +38,4 @@ eks_managed_node_groups = {
       }
     }
   }
-*/
 }

@@ -18,9 +18,14 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: token
+                  key: token
+            - name: USER_STRING
+              value: {{ .Values.env.USER_STRING }}  
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: {{ .Values.image.port }}
-          env:
-            - name: APP_ENV
-              value: {{ .Values.environment.appEnv }}

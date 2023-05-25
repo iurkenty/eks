@@ -1,5 +1,5 @@
 # Use the official Python image as the base image
-FROM python:3.9
+FROM python:3.9-slim-buster
 
 # Set the working directory in the container
 WORKDIR /app
@@ -9,9 +9,6 @@ COPY . .
 
 # Install the Flask package
 RUN pip install --no-cache-dir Flask
-
-# Set the environment variable for the Flask application
-ENV APP_ENV="development"
 
 # Expose the port that the Flask application will be running on
 EXPOSE 5000

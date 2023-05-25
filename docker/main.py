@@ -1,10 +1,15 @@
 # Import necessary modules
 import urllib.request  # For making HTTP requests
 import json  # For parsing JSON responses
+import os # For importing environment variables
 from flask import Flask, render_template, request, send_from_directory  # For creating a Flask web application and serving files
 
 # Create a Flask web application
 app = Flask(__name__)
+
+# Set environment variables
+os.environ.get('TOKEN') # Token for IPinfo account
+os.environ.get('USER_STRING')
 
 # Define the route for the root URL '/'
 @app.route('/')
@@ -14,7 +19,7 @@ def index():
     print(f'Client IP: {client_ip}')
 
     # Get your token from IP info's account dashboard
-    token = "6b8785eb02a28e"
+    token = os.getenv('TOKEN')
 
     # Create the URL for the IPinfo API, using f-string
     url = f"https://www.ipinfo.io/{client_ip}?token={token}"
@@ -25,18 +30,19 @@ def index():
 
     # Parsing the API response
     data = json.loads(response_content)
-
+    
     # Get the user-provided string from the URL parameter
-    user_string = request.args.get('string', default='')
+    user_string = os.getenv('USER_STRING')
+
 
     # Render the template 'index.html' and pass the IP address, geolocation, and user string as variables
-    return render_template('index.html', ip_address=data["ip"], geolocation=f"{data['city']}, {data['region']}", user_string=user_string)
+    return render_template('index.html', ip_address=data["ip"], geolocation=f"{data['city']}, {data['region']}", message=user_string)
 
 # Define the route for '/index.html'
 @app.route('/index.html')
 def serve_index():
     # Get the user-provided string from the URL parameter
-    user_string = request.args.get('string', default='')
+    user_string = os.getenv('USER_STRING')
 
     # Read the content of the 'index.html' file from the specified directory
     with open('index.html', 'r') as file:
